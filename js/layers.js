@@ -61,13 +61,23 @@ addLayer("w", {
             title:"small lake",
             description:"x2 droplet gain",
             cost:new Decimal(75),
+            effect(){ return player[this.layer].points.times(2)
+            },
             unlocked(){return hasUpgrade(this.layer, 13)}
         },
         15:{
             title:"hydro core",
             description:"droplets boost droplet gain (again)",
             cost:new Decimal(200),
-            effect(){return player.points.times(player[this.layer].points).div(2).pow(0.01)},
+            effect(){  switch(player["w"].points) {
+                case 0:
+                  player["w"].points = player["w"].add(1)
+                  break;
+                case 1:  
+                default:
+                  return player["w"].points.times(player["w"].points).pow(0.1)
+              } 
+            },
             effectDisplay() { return format(upgradeEffect(this.layer, this.id))+"x" },
             unlocked(){return hasUpgrade(this.layer, 14)}
         }
