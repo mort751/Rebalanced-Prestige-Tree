@@ -50,7 +50,7 @@ addLayer("w", {
                   break;
                 case 1:  
                 default:
-                  return player["w"].points.times(player["w"].points).pow(0.1)
+                  return player["w"].points.pow(2).pow(0.1)
               } 
             },
         effectDisplay() { return format(upgradeEffect(this.layer, this.id))+"x" }, // Add formatting to 
@@ -107,6 +107,7 @@ addLayer("f", {
     exponent: 0.3, // Prestige currency exponent
     gainMult() { // Calculate the multiplier for main currency from bonuses
         mult = new Decimal(1)
+        if(hasUpgrade(this.layer, 22)) mult = mult.times(2)
         return mult
     },
     gainExp() { // Calculate the exponent on main currency from bonuses
@@ -122,6 +123,12 @@ addLayer("f", {
             description:"1.5x point gain",
             cost: new Decimal(10),
             unlocked(){return hasUpgrade("w", 15)}
+        },
+        22:{
+            title:"coal",
+            description:"2x spark gain",
+            cost: new Decimal(25),
+            unlocked(){return hasUpgrade(this.layer, 21)}
         }
     },
     layerShown(){return hasUpgrade("w",15)}
