@@ -17,7 +17,6 @@ addLayer("w", {
         mult = new Decimal(1)
         if(hasUpgrade("w", 11)) mult = mult.times(2)
         if(hasUpgrade("w", 13)) mult = mult.times(player["w"].points).pow(0.1) 
-        if(hasUpgrade("w", 14)) mult = mult.add(2)    
         if(hasUpgrade("w", 15)) mult = mult.times(upgradeEffect("w", 15))      
         return mult
     },
@@ -61,6 +60,8 @@ addLayer("w", {
             title:"small lake",
             description:"x2 droplet gain",
             cost:new Decimal(75),
+            effect(){ return player[this.layer].points.times(2)
+            },
             unlocked(){return hasUpgrade(this.layer, 13)}
         },
         15:{
