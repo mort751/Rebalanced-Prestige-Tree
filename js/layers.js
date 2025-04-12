@@ -61,8 +61,9 @@ addLayer("w", {
             title:"small lake",
             description:"x2 droplet gain",
             cost:new Decimal(75),
-            },
             unlocked(){return hasUpgrade(this.layer, 13)}
+            },
+
         },
         15:{
             title:"hydro core",
