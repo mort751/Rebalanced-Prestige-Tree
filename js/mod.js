@@ -12,15 +12,16 @@ let modInfo = {
 
 // Set your version in num and name
 let VERSION = {
-	num: "0.0",
-	name: "Literally nothing",
+	num: "0.2",
+	name: "the beginning",
 }
 
 let changelog = `<h1>Changelog:</h1><br>
-	<h3>v0.0</h3><br>
+	<h3>v0.1</h3><br>
 		- Added some upgrades.<br>
-		- Added added fire and water layers.`
-
+		- Added fire and water layers.
+    <h3>v0.2</h3><br>
+	    - Tweaked some upgrades.<br>` 
 let winText = `Congratulations! You have reached the end and beaten this game, but for now...`
 
 // If you add new functions anywhere inside of a layer, and those functions have an effect when called, add them here.
@@ -42,7 +43,8 @@ function getPointGen() {
 		return new Decimal(0)
 
 	let gain = new Decimal(1)
-	if (hasUpgrade("w",11)) gain = gain.times(2)
+	if (hasUpgrade("w",12)) gain = gain.times(2)
+    if (hasUpgrade("f",21)) gain = gain.times(1.5)
 	return gain
 }
 

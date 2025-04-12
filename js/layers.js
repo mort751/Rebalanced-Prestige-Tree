@@ -6,7 +6,7 @@ addLayer("w", {
         unlocked: true,
 		points: new Decimal(0),
     }},
-    color: "#4BDC13",
+    color: "#1200FF",
     requires: new Decimal(10), // Can be a function that takes requirement increases into account
     resource: "Droplets", // Name of prestige currency
     baseResource: "energy", // Name of resource prestige is based on
@@ -16,6 +16,8 @@ addLayer("w", {
     gainMult() { // Calculate the multiplier for main currency from bonuses
         mult = new Decimal(1)
         if(hasUpgrade("w", 11)) mult = mult.times(2)
+        if(hasUpgrade("w", 13)) mult = mult.times(player["w"].points).pow(1.5) 
+        if(hasUpgrade("w", 15)) mult = mult.times(upgradeEffect("w", 15))      
         return mult
     },
     gainExp() { // Calculate the exponent on main currency from bonuses
@@ -27,23 +29,23 @@ addLayer("w", {
     ],
     upgrades:{
         11:{
-            title:"raindrops",
+            title:"puddle",
             description:"x2 droplet gain",
-            cost: new Decimal(10),
+            cost: new Decimal(5),
         },
         12:{
             title:"water bucket",
             description:"x2 point gain",
-            cost: new Decimal(15),
+            cost: new Decimal(10),
             unlocked(){return hasUpgrade(this.layer, 11)}
         },
         13:{
-            title:"hose",
-            description:"raindrops boost raindrop gain",
+            title:"water tank",
+            description:"droplets boost droplets gain",
             cost: new Decimal(25),
             effect(){
-            return player[this.layer].points.times(Math.log10(player[this.layer].points))
-        },
+            return player["w"].points.times(player["w"].points).pow(0.3)
+            },
         effectDisplay() { return format(upgradeEffect(this.layer, this.id))+"x" }, // Add formatting to 
         unlocked(){return hasUpgrade(this.layer, 12)}
     },
@@ -51,12 +53,16 @@ addLayer("w", {
             title:"small lake",
             description:"x2 droplet gain",
             cost:new Decimal(50),
-            effect(){ return player[this.layer].points.times(2)},
+            effect(){ return player[this.layer].points.times(2)
+            },
             unlocked(){return hasUpgrade(this.layer, 13)}
         },
         15:{
-            title:"big lake",
-            description:"UNFINISHED",
+            title:"hydro core",
+            description:"droplets boost droplet gain (again)",
+            cost:new Decimal(100),
+            effect(){return player.points.times(player[this.layer].points).div(2).pow(0.01)},
+            effectDisplay() { return format(upgradeEffect(this.layer, this.id))+"x" },
             unlocked(){return hasUpgrade(this.layer, 14)}
         }
     },
@@ -70,7 +76,7 @@ addLayer("f", {
         unlocked: true,
 		points: new Decimal(0),
     }},
-    color: "#4BDC13",
+    color: "#4B0000",
     requires: new Decimal(10), // Can be a function that takes requirement increases into account
     resource: "sparks", // Name of prestige currency
     baseResource: "energy", // Name of resource prestige is based on
@@ -90,7 +96,9 @@ addLayer("f", {
     ],
     upgrades:{
         21:{
-            title:"UNFINISHED",
+            title:"lighter",
+            description:"1.5x point gain",
+            cost: new Decimal(10),
             unlocked(){return hasUpgrade("w", 15)}
         }
     },
