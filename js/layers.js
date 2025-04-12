@@ -16,8 +16,8 @@ addLayer("w", {
     gainMult() { // Calculate the multiplier for main currency from bonuses
         mult = new Decimal(1)
         if(hasUpgrade("w", 11)) mult = mult.times(2)
-        if(hasUpgrade("w", 13)) mult = mult.times(player["w"].points).pow(0.1)
-        if(hasUpgrade("w", 14)) mult = mult.add(2)     
+        if(hasUpgrade("w", 13)) mult = mult.times(player["w"].points).pow(0.1) 
+        if(hasUpgrade("w", 14)) mult = mult.add(2)    
         if(hasUpgrade("w", 15)) mult = mult.times(upgradeEffect("w", 15))      
         return mult
     },
@@ -62,8 +62,6 @@ addLayer("w", {
             description:"x2 droplet gain",
             cost:new Decimal(75),
             unlocked(){return hasUpgrade(this.layer, 13)}
-            },
-
         },
         15:{
             title:"hydro core",
