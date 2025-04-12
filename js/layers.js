@@ -44,8 +44,8 @@ addLayer("w", {
             description:"droplets boost droplets gain",
             cost: new Decimal(25),
             effect(){
-            return player["w"].points.times(player["w"].points).pow(0.1)
-            },
+            if(player["w"].points != 0 ){return player["w"].points.times(player["w"].points).pow(0.1) 
+            }},
         effectDisplay() { return format(upgradeEffect(this.layer, this.id))+"x" }, // Add formatting to 
         unlocked(){return hasUpgrade(this.layer, 12)}
     },
