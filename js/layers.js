@@ -16,7 +16,7 @@ addLayer("w", {
     gainMult() { // Calculate the multiplier for main currency from bonuses
         mult = new Decimal(1)
         if(hasUpgrade("w", 11)) mult = mult.times(2)
-        if(hasUpgrade("w", 13)) mult = mult.times(player["w"].points).pow(1.5) 
+        if(hasUpgrade("w", 13)) mult = mult.times(player["w"].points).pow(0.1) 
         if(hasUpgrade("w", 15)) mult = mult.times(upgradeEffect("w", 15))      
         return mult
     },
@@ -44,7 +44,7 @@ addLayer("w", {
             description:"droplets boost droplets gain",
             cost: new Decimal(25),
             effect(){
-            return player["w"].points.times(player["w"].points).pow(0.3)
+            return player["w"].points.times(player["w"].points).pow(0.1)
             },
         effectDisplay() { return format(upgradeEffect(this.layer, this.id))+"x" }, // Add formatting to 
         unlocked(){return hasUpgrade(this.layer, 12)}
@@ -52,7 +52,7 @@ addLayer("w", {
         14:{
             title:"small lake",
             description:"x2 droplet gain",
-            cost:new Decimal(50),
+            cost:new Decimal(75),
             effect(){ return player[this.layer].points.times(2)
             },
             unlocked(){return hasUpgrade(this.layer, 13)}
@@ -60,11 +60,26 @@ addLayer("w", {
         15:{
             title:"hydro core",
             description:"droplets boost droplet gain (again)",
-            cost:new Decimal(100),
+            cost:new Decimal(200),
             effect(){return player.points.times(player[this.layer].points).div(2).pow(0.01)},
             effectDisplay() { return format(upgradeEffect(this.layer, this.id))+"x" },
             unlocked(){return hasUpgrade(this.layer, 14)}
         }
+    },
+    buyables: {
+        16: {
+            title:"water pump",
+            cost(x) { return new Decimal(1000).mul(x) },
+            display() { return format(upgradeEffect(this.layer, this.id))+"x" },
+            canAfford() { return player[this.layer].points.gte(this.cost()) },
+            buy() {
+                player[this.layer].points = player[this.layer].points.sub(this.cost())
+                setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
+            },
+            effect(x){return player.points.times(x).div(2).pow(0.02)},
+            effectDisplay() { return format(this.effect)+"x" },
+            unlocked(){return hasUpgrade(this.layer, 15)}
+        },
     },
     layerShown(){return true}
 })
@@ -82,7 +97,7 @@ addLayer("f", {
     baseResource: "energy", // Name of resource prestige is based on
     baseAmount() {return player.points}, // Get the current amount of baseResource
     type: "normal", // normal: cost to gain currency depends on amount gained. static: cost depends on how much you already have
-    exponent: 0.5, // Prestige currency exponent
+    exponent: 0.3, // Prestige currency exponent
     gainMult() { // Calculate the multiplier for main currency from bonuses
         mult = new Decimal(1)
         return mult

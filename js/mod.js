@@ -19,9 +19,10 @@ let VERSION = {
 let changelog = `<h1>Changelog:</h1><br>
 	<h3>v0.1</h3><br>
 		- Added some upgrades.<br>
-		- Added fire and water layers.<br>
+		- Added fire and water.<br>
     <h3>v0.2</h3><br>
-	    - Tweaked some upgrades.<br>` 
+	    - Tweaked some upgrades.<br>
+		- Added water buyable` 
 let winText = `Congratulations! You have reached the end and beaten this game, but for now...`
 
 // If you add new functions anywhere inside of a layer, and those functions have an effect when called, add them here.
@@ -44,6 +45,7 @@ function getPointGen() {
 
 	let gain = new Decimal(1)
 	if (hasUpgrade("w",12)) gain = gain.times(2)
+	if (hasUpgrade("w",16)) gain = gain.times(upgradeEffect("w", 16))
     if (hasUpgrade("f",21)) gain = gain.times(1.5)
 	return gain
 }
