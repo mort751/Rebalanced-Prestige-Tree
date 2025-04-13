@@ -17,7 +17,7 @@ addLayer("w", {
         mult = new Decimal(1)
         if (hasUpgrade("w", 11)) mult = mult.times(2)
         if (hasUpgrade("w", 13) && player["w"].points.gt(0)) mult = mult.times(upgradeEffect("w", 13))
-        if (hasUpgrade("w", 14)) mult = mult.times(1)
+        if (hasUpgrade("w", 14)) mult = mult.times(2)
         if (hasUpgrade("w", 15) && player["w"].points.gt(0)) mult = mult.times(upgradeEffect("w", 15))
         return mult
     },
@@ -44,7 +44,7 @@ addLayer("w", {
             title:"water tank",
             description:"droplets boost droplets gain",
             cost: new Decimal(25),
-            effect(){ return player["w"].points.pow(1.2)},
+            effect(){ return player["w"].points.pow(0.2)},
             effectDisplay() {return format(upgradeEffect(this.layer, this.id))+"x" }, // Add formatting to 
             unlocked(){return hasUpgrade(this.layer, 12)}
         },
@@ -59,8 +59,8 @@ addLayer("w", {
         15:{
             title:"hydro core",
             description:"droplets boost droplet gain (again)",
-            cost:new Decimal(200),
-            effect(){ player["w"].points.times(player["w"].points).pow(0.1)},
+            cost:new Decimal(100),
+            effect(){return player["w"].points.pow(0.3)},
             effectDisplay() { return format(upgradeEffect(this.layer, this.id))+"x" },
             unlocked(){return hasUpgrade(this.layer, 14)}
         }
