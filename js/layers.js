@@ -16,9 +16,9 @@ addLayer("w", {
     gainMult() { // Calculate the multiplier for main currency from bonuses
         mult = new Decimal(1)
         if(hasUpgrade("w", 11)) mult = mult.times(2)
-        if(hasUpgrade("w", 13)) mult = mult.times(player["w"].points).pow(0.1) 
-        if(hasUpgrade("w", 14)) mult = mult.times(1)    
-        if(hasUpgrade("w", 15)) mult = mult.times(upgradeEffect("w", 15))      
+        if(hasUpgrade("w", 13) && player["w"].points != 0) mult = mult.times(player["w"].points).pow(0.1) 
+        if(hasUpgrade("w", 14) ) mult = mult.times(1)    
+        if(hasUpgrade("w", 15) && player["w"].points != 0) mult = mult.times(upgradeEffect("w", 15))      
         return mult
     },
     gainExp() { // Calculate the exponent on main currency from bonuses
@@ -44,15 +44,7 @@ addLayer("w", {
             title:"water tank",
             description:"droplets boost droplets gain",
             cost: new Decimal(25),
-            effect(){
-            switch(player["w"].points) {
-                case 0:
-                  player["w"].points = player["w"].add(1)
-                  break;
-                case 1:  
-                default:
-                  return player["w"].points.pow(2).pow(0.1)
-              } 
+            effect(){player["w"].points.pow(2).pow(0.1)
             },
         effectDisplay() { return format(upgradeEffect(this.layer, this.id))+"x" }, // Add formatting to 
         unlocked(){return hasUpgrade(this.layer, 12)}
@@ -69,15 +61,7 @@ addLayer("w", {
             title:"hydro core",
             description:"droplets boost droplet gain (again)",
             cost:new Decimal(200),
-            effect(){  switch(player["w"].points) {
-                case 0:
-                  player["w"].points = player["w"].add(1)
-                  break;
-                case 1:  
-                default:
-                  return player["w"].points.times(player["w"].points).pow(0.1)
-              } 
-            },
+            effect(){player["w"].points.times(player["w"].points).pow(0.1)},
             effectDisplay() { return format(upgradeEffect(this.layer, this.id))+"x" },
             unlocked(){return hasUpgrade(this.layer, 14)}
         }
