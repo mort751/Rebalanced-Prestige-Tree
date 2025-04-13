@@ -13,13 +13,13 @@ addLayer("w", {
     baseAmount() {return player.points}, // Get the current amount of baseResource
     type: "normal", // normal: cost to gain currency depends on amount gained. static: cost depends on how much you already have
     exponent: 0.5, // Prestige currency exponent
-gainMult() { // Calculate the multiplier for main currency from bonuses
-    mult = new Decimal(1)
-    if (hasUpgrade("w", 11)) mult = mult.times(2)
-    if (hasUpgrade("w", 13) && player["w"].points.gte(0)) mult = mult.times(player["w"].points).pow(0.1)
-    if (hasUpgrade("w", 14)) mult = mult.times(1)    
-    if (hasUpgrade("w", 15) && player["w"].points.gte(0)) mult = mult.times(upgradeEffect("w", 15))      
-    return mult
+    gainMult() { // Calculate the multiplier for main currency from bonuses
+        mult = new Decimal(1)
+        if (hasUpgrade("w", 11)) mult = mult.times(2)
+        if (hasUpgrade("w", 13) && player["w"].points.gt(0)) mult = mult.times(upgradeEffect("w", 13))
+        if (hasUpgrade("w", 14)) mult = mult.times(1)
+        if (hasUpgrade("w", 15) && player["w"].points.gt(0)) mult = mult.times(upgradeEffect("w", 15))
+        return mult
     },
     gainExp() { // Calculate the exponent on main currency from bonuses
         return new Decimal(1)
@@ -44,10 +44,9 @@ gainMult() { // Calculate the multiplier for main currency from bonuses
             title:"water tank",
             description:"droplets boost droplets gain",
             cost: new Decimal(25),
-            effect(){player["w"].points.pow(2).pow(0.1)
-            },
-        effectDisplay() { return format(upgradeEffect(this.layer, this.id))+"x" }, // Add formatting to 
-        unlocked(){return hasUpgrade(this.layer, 12)}
+            effect(){ return player["w"].points.pow(1.2)},
+            effectDisplay() {return format(upgradeEffect(this.layer, this.id))+"x" }, // Add formatting to 
+            unlocked(){return hasUpgrade(this.layer, 12)}
         },
         14:{
             title:"small lake",
@@ -61,7 +60,7 @@ gainMult() { // Calculate the multiplier for main currency from bonuses
             title:"hydro core",
             description:"droplets boost droplet gain (again)",
             cost:new Decimal(200),
-            effect(){player["w"].points.times(player["w"].points).pow(0.1)},
+            effect(){ player["w"].points.times(player["w"].points).pow(0.1)},
             effectDisplay() { return format(upgradeEffect(this.layer, this.id))+"x" },
             unlocked(){return hasUpgrade(this.layer, 14)}
         }
