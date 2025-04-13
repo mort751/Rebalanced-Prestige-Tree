@@ -48,7 +48,7 @@ gainMult() { // Calculate the multiplier for main currency from bonuses
             },
         effectDisplay() { return format(upgradeEffect(this.layer, this.id))+"x" }, // Add formatting to 
         unlocked(){return hasUpgrade(this.layer, 12)}
-    },
+        },
         14:{
             title:"small lake",
             description:"x2 droplet gain",
