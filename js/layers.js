@@ -14,13 +14,14 @@ addLayer("w", {
     type: "normal", // normal: cost to gain currency depends on amount gained. static: cost depends on how much you already have
     exponent: 0.5, // Prestige currency exponent
     gainMult() { // Calculate the multiplier for main currency from bonuses
-        mult = new Decimal(1)
-        if(hasUpgrade("w", 11)) mult = mult.times(2)
-        if(hasUpgrade("w", 13) && player["w"].points != 0) mult = mult.times(player["w"].points).pow(0.1) 
-        if(hasUpgrade("w", 14) ) mult = mult.times(1)    
-        if(hasUpgrade("w", 15) && player["w"].points != 0) mult = mult.times(upgradeEffect("w", 15))      
-        return mult
-    },
+gainMult() { // Calculate the multiplier for main currency from bonuses
+    mult = new Decimal(1)
+    if (hasUpgrade("w", 11)) mult = mult.times(2)
+    if (hasUpgrade("w", 13) && player["w"].points.gte(0)) mult = mult.times(player["w"].points).pow(0.1)
+    if (hasUpgrade("w", 14)) mult = mult.times(1)    
+    if (hasUpgrade("w", 15) && player["w"].points.gte(0)) mult = mult.times(upgradeEffect("w", 15))      
+    return mult
+},
     gainExp() { // Calculate the exponent on main currency from bonuses
         return new Decimal(1)
     },
