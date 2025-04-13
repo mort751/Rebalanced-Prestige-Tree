@@ -82,21 +82,6 @@ addLayer("w", {
             unlocked(){return hasUpgrade(this.layer, 14)}
         }
     },
-    buyables: {
-        16: {
-            title:"water pump",
-            cost(x) { return new Decimal(1000).mul(x) },
-            display() { return format(upgradeEffect(this.layer, this.id))+"x" },
-            canAfford() { return player[this.layer].points.gte(this.cost()) },
-            buy() {
-                player[this.layer].points = player[this.layer].points.sub(this.cost())
-                setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
-            },
-            effect(x){return player.points.times(x).div(2).pow(0.02)},
-            effectDisplay() { return format(this.effect)+"x" },
-            unlocked(){return hasUpgrade(this.layer, 15)}
-        },
-    },
     layerShown(){return true}
 })
 addLayer("f", {
