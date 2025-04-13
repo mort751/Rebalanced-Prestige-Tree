@@ -21,8 +21,7 @@ let changelog = `<h1>Changelog:</h1><br>
 		- Added some upgrades.<br>
 		- Added fire and water.<br>
     <h3>v0.2</h3><br>
-	    - Tweaked some upgrades.<br>
-		- Added water buyable` 
+	    - Tweaked some upgrades.` 
 let winText = `Congratulations! You have reached the end and beaten this game, but for now...`
 
 // If you add new functions anywhere inside of a layer, and those functions have an effect when called, add them here.
