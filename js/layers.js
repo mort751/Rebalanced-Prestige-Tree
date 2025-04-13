@@ -18,7 +18,8 @@ addLayer("w", {
         if (hasUpgrade("w", 11)) mult = mult.times(2)
         if (hasUpgrade("w", 13) && player["w"].points.gt(0)) mult = mult.times(upgradeEffect("w", 13))
         if (hasUpgrade("w", 14)) mult = mult.times(2)
-        if (hasUpgrade("w", 15) && player["w"].points.gt(0)) mult = mult.times(upgradeEffect("w", 15))
+        if (hasUpgrade("f", 23)) mult = mult.times(2) 
+        if (hasUpgrade("b", 31) && player["w"].points.gt(0)) mult = mult.times(upgradeEffect("b", 31))       
         return mult
     },
     gainExp() { // Calculate the exponent on main currency from bonuses
@@ -58,7 +59,7 @@ addLayer("w", {
         },
         15:{
             title:"hydro core",
-            description:"droplets boost droplet gain (again)",
+            description:"droplets boost point gain",
             cost:new Decimal(100),
             effect(){return player["w"].points.pow(0.3)},
             effectDisplay() { return format(upgradeEffect(this.layer, this.id))+"x" },
@@ -85,6 +86,7 @@ addLayer("f", {
     gainMult() { // Calculate the multiplier for main currency from bonuses
         mult = new Decimal(1)
         if(hasUpgrade(this.layer, 22)) mult = mult.times(2)
+        if (hasUpgrade("b", 31) && player["f"].points.gt(0)) mult = mult.times(upgradeEffect("b", 31))    
         return mult
     },
     gainExp() { // Calculate the exponent on main currency from bonuses
@@ -106,8 +108,51 @@ addLayer("f", {
             description:"2x spark gain",
             cost: new Decimal(25),
             unlocked(){return hasUpgrade(this.layer, 21)}
+        },
+        23:{
+            title:"kettle",
+            description:"2x droplet gain",
+            cost: new Decimal(50),
+            unlocked(){return hasUpgrade(this.layer, 22)}
         }
     },
     layerShown(){return hasUpgrade("w",15)}
+})
+addLayer("b", {
+    name: "Boiler", // This is optional, only used in a few places, If absent it just uses the layer id.
+    symbol: "B", // This appears on the layer's node. Default is the id with the first letter capitalized
+    position: 0, // Horizontal position within a row. By default it uses the layer id and sorts in alphabetical order
+    startData() { return {
+        unlocked: true,
+		points: new Decimal(0),
+    }},
+    color: "#4B0000",
+    requires: new Decimal(1000), // Can be a function that takes requirement increases into account
+    resource: "steam", // Name of prestige currency
+    baseResource: "droplets", // Name of resource prestige is based on
+    baseAmount() {return player["w"].points }, // Get the current amount of baseResource
+    type: "static", // normal: cost to gain currency depends on amount gained. static: cost depends on how much you already have
+    exponent: 0.3, // Prestige currency exponent
+    gainMult() { // Calculate the multiplier for main currency from bonuses
+        mult = new Decimal(1)
+        return mult
+    },
+    gainExp() { // Calculate the exponent on main currency from bonuses
+        return new Decimal(1)
+    },
+    row: 1, // Row the layer is in on the tree (0 is the first row)
+    hotkeys: [
+        {key: "f", description: "F: Reset for sparks", onPress(){if (canReset(this.layer)) doReset(this.layer)}},
+    ],
+    upgrades:{
+    31:{
+        title:"sunlight",
+        description:"boost droplet and spark gain",
+        effect(){return player[this.layer].points.pow(0.1)},
+        effectDisplay() { return format(upgradeEffect(this.layer, this.id))+"x" },
+        unlocked(){ return true}
+    }
+},
+    layerShown(){return hasUpgrade("f",23) || player[this.layer].points >= 0}
 })
 
