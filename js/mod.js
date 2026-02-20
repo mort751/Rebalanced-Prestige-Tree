@@ -1,13 +1,13 @@
 let modInfo = {
-	name: "The ??? Tree",
-	author: "nobody",
+	name: "The Ultimate Tree 2",
+	author: "liam",
 	pointsName: "points",
 	modFiles: ["layers.js", "tree.js"],
 
 	discordName: "",
 	discordLink: "",
-	initialStartPoints: new Decimal (10), // Used for hard resets and new players
-	offlineLimit: 1,  // In hours
+	initialStartPoints: new Decimal (0), // Used for hard resets and new players
+	offlineLimit: 1.5,  // In hours
 }
 
 // Set your version in num and name
