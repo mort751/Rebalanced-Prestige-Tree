@@ -1,23 +1,24 @@
 let modInfo = {
-	name: "The ??? Tree",
-	author: "nobody",
-	pointsName: "points",
+	name: "The sigma Tree",
+	author: "hhrjfjjxg",
+	pointsName: "rizz",
 	modFiles: ["layers.js", "tree.js"],
 
-	discordName: "",
+	discordName: "i dont have discord",
 	discordLink: "",
+	discordLink: "https://github.com/hhrjfjjxg/The-Modding-Tree/blob/master/docs/tutorials/getting-started.md",
 	initialStartPoints: new Decimal (10), // Used for hard resets and new players
 	offlineLimit: 1,  // In hours
 }
 
 // Set your version in num and name
 let VERSION = {
-	num: "0.0",
-	name: "Literally nothing",
+	num: "0.001",
+	name: "The sigma gronk phonk Tree",
 }
 
 let changelog = `<h1>Changelog:</h1><br>
-	<h3>v0.0</h3><br>
+	<h3>v0.001</h3><br>
 		- Added things.<br>
 		- Added stuff.`
 
@@ -39,9 +40,17 @@ function canGenPoints(){
 // Calculate points/sec!
 function getPointGen() {
 	if(!canGenPoints())
-		return new Decimal(0)
-
-	let gain = new Decimal(1)
+	return new Decimal(0)
+	let gain = new Decimal(10)
+	if (hasUpgrade('p', 11)) gain = gain.times(1.2)
+	if (hasUpgrade('p', 12)) gain = gain.times(1.3)
+	if (hasUpgrade('p', 13)) gain = gain.times(upgradeEffect('p', 13))
+	if (hasUpgrade('p', 14)) gain = gain.times(1.5)
+	if (hasUpgrade('p', 15)) gain = gain.times(upgradeEffect('p', 15))
+	if (hasUpgrade('p', 26)) gain = gain.times(1.5)
+	if (hasUpgrade('p', 27)) gain = gain.times(upgradeEffect('p', 27))
+	if (hasUpgrade('p', 28)) gain = gain.times(1.67)
+	if (hasUpgrade('g', 11)) gain = gain.times(2)
 	return gain
 }
 
