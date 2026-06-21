@@ -1,7 +1,7 @@
 let modInfo = {
-	name: "The ??? Tree",
-	author: "nobody",
-	pointsName: "points",
+	name: "The Darkness Tree",
+	author: "somebody",
+	pointsName: "shades",
 	modFiles: ["layers.js", "tree.js"],
 
 	discordName: "",
@@ -12,8 +12,8 @@ let modInfo = {
 
 // Set your version in num and name
 let VERSION = {
-	num: "0.0",
-	name: "Literally nothing",
+	num: "1.0",
+	name: "The beginning",
 }
 
 let changelog = `<h1>Changelog:</h1><br>
@@ -40,8 +40,14 @@ function canGenPoints(){
 function getPointGen() {
 	if(!canGenPoints())
 		return new Decimal(0)
-
 	let gain = new Decimal(1)
+	if (hasUpgrade('s', 11)) gain = gain.times(2)
+    if (hasUpgrade('s', 12)) gain = gain.times(upgradeEffect('s', 12))
+	if (hasUpgrade('s', 13)) gain = gain.times(upgradeEffect('s', 13))
+	if (hasUpgrade('s', 14)) gain = gain.times(3)
+	if (getBuyableAmount('s', 11).gte(1)) gain = gain.times(buyableEffect('s', 11))
+	if (hasUpgrade('d', 11)) gain = gain.times(2)
+	gain = gain.times(tmp.a.effect)
 	return gain
 }
 
@@ -55,7 +61,7 @@ var displayThings = [
 
 // Determines when the game "ends"
 function isEndgame() {
-	return player.points.gte(new Decimal("e280000000"))
+	return player.d.points.gte(new Decimal("e280000000"))
 }
 
 
