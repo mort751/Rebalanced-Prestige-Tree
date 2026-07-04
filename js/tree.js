@@ -1,23 +1,9 @@
-var layoutInfo = {
-    startTab: "none",
-    startNavTab: "tree-tab",
-	showTree: true,
-
-    treeLayout: ""
-
-    
-}
+addNode ("m", { layer: "m"})
+addNode ("r", { layer: "r"})
+addNode ("p", { layer: "p"})
+addNode ("l", { layer: "l"})
+addNode ("reorg", { layer: "reorg"})
+addNode ("megacorp", { layer: "megacorp"})
 
 
-// A "ghost" layer which offsets other layers in the tree
-addNode("blank", {
-    layerShown: "ghost",
-}, 
-)
 
-
-addLayer("tree-tab", {
-    tabFormat: [["tree", function() {return (layoutInfo.treeLayout ? layoutInfo.treeLayout : TREE_LAYERS)}]],
-    previousTab: "",
-    leftTab: true,
-})
