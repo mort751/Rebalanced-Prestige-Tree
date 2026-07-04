@@ -79,3 +79,9 @@ function milestoneShown(layer, id) {
 }
 
 let formatOption = (opt) => opt ? 'ON' : 'OFF'
+
+const VERSION = {
+	num: "1.0",
+	name: "Factory Alpha",
+	withoutName: "1.0"
+}
