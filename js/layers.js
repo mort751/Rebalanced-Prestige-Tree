@@ -312,8 +312,7 @@ addLayer("r", {
         }
 
     },
-
-
-    tabFormat: ["main-display", "prestige-button", "blank", "upgrades"]
+    
+    tabFormat: ["main-display", "prestige-button", "blank", "upgrades"],
 
 })
