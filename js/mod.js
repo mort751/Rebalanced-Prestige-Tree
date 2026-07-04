@@ -9,7 +9,9 @@ let modInfo = {
 	initialStartPoints: new Decimal(0), // Used for hard resets and new players
 	offlineLimit: 24,  // In hours
 }
-function firstGain(){ return new Decimal (110)}
+function firstGain(){ 
+	return new Decimal (110)
+}
 
 function gainMult(){
 	let mult = new DeDecimal (1)
@@ -30,7 +32,7 @@ function startPlayerBase(){
 		steel: new Decimal(0),
 		gear: new Decimal(0),
 		motor: new Decimal(0),
-		electronicBoard: new Decimal(0),
+		electronicBoard: new Decimal(0)
 	}
 }
 
@@ -57,7 +59,7 @@ let winText = `Congratulations! You have reached the end and beaten this game, b
 var doNotCallTheseFunctionsEveryTick = ["blowUpEverything"]
 
 function getStartPoints() {
-	return new Decimal(modInfo.initialStartPoints)
+    return new Decimal(0)
 }
 
 // Determines if it should show points/sec
