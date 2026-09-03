@@ -1,27 +1,32 @@
 let modInfo = {
-	name: "The ??? Tree",
-	author: "nobody",
-	pointsName: "points",
+	name: "The Colour Tree",
+	author: "Grassyhead13",
+	pointsName: "colour points",
 	modFiles: ["layers.js", "tree.js"],
 
 	discordName: "",
 	discordLink: "",
-	initialStartPoints: new Decimal (10), // Used for hard resets and new players
-	offlineLimit: 1,  // In hours
+	initialStartPoints: new Decimal (0), // Used for hard resets and new players
+	offlineLimit: 0,  // In hours
 }
 
 // Set your version in num and name
 let VERSION = {
-	num: "0.0",
-	name: "Literally nothing",
+	num: "0.1",
+	name: "Alpha Release",
 }
 
 let changelog = `<h1>Changelog:</h1><br>
-	<h3>v0.0</h3><br>
-		- Added things.<br>
-		- Added stuff.`
+	<h3>v0.1</h3><br>
+		- Released the game in alpha<br>
+		- Added Layer 1 (White)<br><br>
+	<h3>v0.2 (Upcoming)</h3><br>
+		- Added Layer 2 (Red, Green, Blue)<br>
+		- Added new achievements<br>
+		- Added new White Point upgrades`
+	
 
-let winText = `Congratulations! You have reached the end and beaten this game, but for now...`
+let winText = `Congratulations! You have reached the end and beaten The Colour Tree, but for now...`
 
 // If you add new functions anywhere inside of a layer, and those functions have an effect when called, add them here.
 // (The ones here are examples, all official functions are already taken care of)
@@ -33,7 +38,7 @@ function getStartPoints(){
 
 // Determines if it should show points/sec
 function canGenPoints(){
-	return true
+	return hasUpgrade('w', 11)
 }
 
 // Calculate points/sec!
@@ -42,6 +47,15 @@ function getPointGen() {
 		return new Decimal(0)
 
 	let gain = new Decimal(1)
+	if (hasUpgrade('w', 12)) gain = gain.times(2)
+	if (hasUpgrade('w', 13)) gain = gain.times(upgradeEffect('w', 13))
+	if (hasUpgrade('w', 14)) gain = gain.div(0.75)
+	if (hasUpgrade('w', 21)) gain = gain.times(1.5)
+	if (hasUpgrade('w', 23)) gain = gain.times(upgradeEffect('w', 23))
+	if (hasUpgrade('w', 34)) gain = gain.times(upgradeEffect('w', 34))
+	// if (hasUpgrade('r', 11)) gain = gain.times(2)
+	// if (hasUpgrade('r', 12)) gain = gain.pow(1.1)
+	// if (hasUpgrade('r', 13)) gain = gain.times(upgradeEffect('r', 13))
 	return gain
 }
 
