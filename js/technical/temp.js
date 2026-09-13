@@ -45,8 +45,8 @@ function setupTemp() {
 	}
 
 	tmp.other = {
-		lastPoints: player.points || decimalZero,
-		oomps: decimalZero,
+		lastPoints: player.points || 0,
+		oomps: 0,
 		screenWidth: 0,
 		screenHeight: 0,
     }
@@ -63,8 +63,6 @@ function setupTempData(layerData, tmpData, funcsData) {
 		if (layerData[item] == null) {
 			tmpData[item] = null
 		}
-		else if (layerData[item] instanceof Decimal)
-			tmpData[item] = layerData[item]
 		else if (Array.isArray(layerData[item])) {
 			tmpData[item] = []
 			funcsData[item] = []
@@ -84,7 +82,7 @@ function setupTempData(layerData, tmpData, funcsData) {
 			if (boolNames.includes(item))
 				tmpData[item] = false
 			else
-				tmpData[item] = decimalOne // The safest thing to put probably?
+				tmpData[item] = 1 // The safest thing to put probably?
 		} else {
 			tmpData[item] = layerData[item]
 		}
@@ -106,7 +104,7 @@ function updateTemp() {
 		tmp[layer].trueGlowColor = tmp[layer].glowColor
 		tmp[layer].notify = shouldNotify(layer)
 		tmp[layer].prestigeNotify = prestigeNotify(layer)
-		if (tmp[layer].passiveGeneration === true) tmp[layer].passiveGeneration = 1 // new Decimal(true) = decimalZero
+		if (tmp[layer].passiveGeneration === true) tmp[layer].passiveGeneration = 1 
 
 	}
 
