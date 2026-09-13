@@ -22,7 +22,7 @@ function canAffordUpgrade(layer, id) {
 
 function canBuyBuyable(layer, id) {
 	let b = temp[layer].buyables[id]
-	return (b.unlocked && run(b.canAfford, b) && player[layer].buyables[id].lt(b.purchaseLimit) && !tmp[layer].deactivated)
+	return (b.unlocked && run(b.canAfford, b) && player[layer].buyables[id] < (b.purchaseLimit) && !tmp[layer].deactivated)
 }
 
 
@@ -31,18 +31,18 @@ function canAffordPurchase(layer, thing, cost) {
 	if (thing.currencyInternalName) {
 		let name = thing.currencyInternalName
 		if (thing.currencyLocation) {
-			return !(thing.currencyLocation[name].lt(cost))
+			return !(thing.currencyLocation[name] < (cost))
 		}
 		else if (thing.currencyLayer) {
 			let lr = thing.currencyLayer
-			return !(player[lr][name].lt(cost))
+			return !(player[lr][name] < (cost))
 		}
 		else {
-			return !(player[name].lt(cost))
+			return !(player[name] < (cost))
 		}
 	}
 	else {
-		return !(player[layer].points.lt(cost))
+		return !(player[layer].points < (cost))
 	}
 }
 
@@ -66,22 +66,22 @@ function buyUpg(layer, id) {
 		if (upg.currencyInternalName) {
 			let name = upg.currencyInternalName
 			if (upg.currencyLocation) {
-				if (upg.currencyLocation[name].lt(cost)) return
-				upg.currencyLocation[name] = upg.currencyLocation[name].sub(cost)
+				if (upg.currencyLocation[name] < (cost)) return
+				upg.currencyLocation[name] = upg.currencyLocation[name] - (cost)
 			}
 			else if (upg.currencyLayer) {
 				let lr = upg.currencyLayer
-				if (player[lr][name].lt(cost)) return
-				player[lr][name] = player[lr][name].sub(cost)
+				if (player[lr][name] < (cost)) return
+				player[lr][name] = player[lr][name] - (cost)
 			}
 			else {
-				if (player[name].lt(cost)) return
-				player[name] = player[name].sub(cost)
+				if (player[name] < (cost)) return
+				player[name] = player[name] - (cost)
 			}
 		}
 		else {
-			if (player[layer].points.lt(cost)) return
-			player[layer].points = player[layer].points.sub(cost)
+			if (player[layer].points < (cost)) return
+			player[layer].points = player[layer].points - (cost)
 		}
 	}
 	player[layer].upgrades.push(id);
@@ -130,7 +130,7 @@ function clickGrid(layer, id) {
 function inChallenge(layer, id) {
 	let challenge = player[layer].activeChallenge
 	if (!challenge) return false
-	id = toNumber(id)
+	id = Number(id)
 	if (challenge == id) return true
 
 	if (layers[layer].challenges[challenge].countsAs)
@@ -186,8 +186,7 @@ function goBack(layer) {
 
 function layOver(obj1, obj2) {
 	for (let x in obj2) {
-		if (obj2[x] instanceof Decimal) obj1[x] = new Decimal(obj2[x])
-		else if (obj2[x] instanceof Object) layOver(obj1[x], obj2[x]);
+		if (obj2[x] instanceof Object) layOver(obj1[x], obj2[x]);
 		else obj1[x] = obj2[x];
 	}
 }
@@ -209,7 +208,7 @@ function prestigeNotify(layer) {
 	}
 	if (tmp[layer].autoPrestige || tmp[layer].passiveGeneration) return false
 	else if (tmp[layer].type == "static") return tmp[layer].canReset
-	else if (tmp[layer].type == "normal") return (tmp[layer].canReset && (tmp[layer].resetGain.gte(player[layer].points.div(10))))
+	else if (tmp[layer].type == "normal") return (tmp[layer].canReset && (tmp[layer].resetGain >= (player[layer].points / 10)))
 	else return false
 }
 
@@ -247,12 +246,6 @@ function layerunlocked(layer) {
 function keepGoing() {
 	player.keepGoing = true;
 	needCanvasUpdate = true;
-}
-
-function toNumber(x) {
-	if (x.mag !== undefined) return x.toNumber()
-	if (x + 0 !== x) return parseFloat(x)
-	return x
 }
 
 function updateMilestones(layer) {
@@ -296,7 +289,7 @@ function addTime(diff, layer) {
 			if (!layer) player.timePlayedReset = true
 		}
 	}
-	time += toNumber(diff)
+	time += Number(diff)
 
 	if (layer) data.time = time
 	else data.timePlayed = time
@@ -344,12 +337,12 @@ document.title = modInfo.name
 
 // Converts a string value to whatever it's supposed to be
 function toValue(value, oldValue) {
-	if (oldValue instanceof Decimal) {
-		value = new Decimal (value)
-		if (isNaN(value)) return decimalZero
+	if (typeof oldValue === "number") {
+		value = Number(value)
+		if (Number.isNaN(value)) return 0
 		return value
 	}
-	if (!isNaN(oldValue)) 
+	if (!Number.isNaN(Number(oldValue))) 
 		return parseFloat(value) || 0
 	return value
 }
