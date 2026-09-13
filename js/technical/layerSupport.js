@@ -1,9 +1,5 @@
 var layers = {}
 
-const decimalZero = new Decimal(0)
-const decimalOne = new Decimal(1)
-const decimalNaN = new Decimal(NaN)
-
 const defaultGlow = "#ff0000"
 
 
@@ -124,7 +120,7 @@ function setupLayer(layer){
                 if (layers[layer].buyables[thing].unlocked === undefined)
                     layers[layer].buyables[thing].unlocked = true
                 layers[layer].buyables[thing].canBuy = function() {return canBuyBuyable(this.layer, this.id)}
-                if (layers[layer].buyables[thing].purchaseLimit === undefined) layers[layer].buyables[thing].purchaseLimit = new Decimal(Infinity)
+                if (layers[layer].buyables[thing].purchaseLimit === undefined) layers[layer].buyables[thing].purchaseLimit = Infinity;
         
             }  
     
@@ -180,13 +176,13 @@ function setupLayer(layer){
     if(!layers[layer].componentStyles) layers[layer].componentStyles = {}
     if(layers[layer].symbol === undefined) layers[layer].symbol = layer.charAt(0).toUpperCase() + layer.slice(1)
     if(layers[layer].unlockOrder === undefined) layers[layer].unlockOrder = []
-    if(layers[layer].gainMult === undefined) layers[layer].gainMult = decimalOne
-    if(layers[layer].gainExp === undefined) layers[layer].gainExp = decimalOne
-    if(layers[layer].directMult === undefined) layers[layer].directMult = decimalOne
+    if(layers[layer].gainMult === undefined) layers[layer].gainMult = 1;
+    if(layers[layer].gainExp === undefined) layers[layer].gainExp = 1;
+    if(layers[layer].directMult === undefined) layers[layer].directMult = 1;
     if(layers[layer].type === undefined) layers[layer].type = "none"
     if(layers[layer].base === undefined || layers[layer].base <= 1) layers[layer].base = 2
-    if(layers[layer].softcap === undefined) layers[layer].softcap = new Decimal("e1e7")
-    if(layers[layer].softcapPower === undefined) layers[layer].softcapPower = new Decimal("0.5")
+    if(layers[layer].softcap === undefined) layers[layer].softcap = 1e100;
+    if(layers[layer].softcapPower === undefined) layers[layer].softcapPower = 1;
     if(layers[layer].displayRow === undefined) layers[layer].displayRow = layers[layer].row
     if(layers[layer].name === undefined) layers[layer].name = layer
     if(layers[layer].layerShown === undefined) layers[layer].layerShown = true
