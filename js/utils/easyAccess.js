@@ -1,13 +1,13 @@
 function hasUpgrade(layer, id) {
-	return ((player[layer].upgrades.includes(toNumber(id)) || player[layer].upgrades.includes(id.toString())) && !tmp[layer].deactivated)
+	return ((player[layer].upgrades.includes(Number(id)) || player[layer].upgrades.includes(id.toString())) && !tmp[layer].deactivated)
 }
 
 function hasMilestone(layer, id) {
-	return ((player[layer].milestones.includes(toNumber(id)) || player[layer].milestones.includes(id.toString())) && !tmp[layer].deactivated)
+	return ((player[layer].milestones.includes(Number(id)) || player[layer].milestones.includes(id.toString())) && !tmp[layer].deactivated)
 }
 
 function hasAchievement(layer, id) {
-	return ((player[layer].achievements.includes(toNumber(id)) || player[layer].achievements.includes(id.toString())) && !tmp[layer].deactivated)
+	return ((player[layer].achievements.includes(Number(id)) || player[layer].achievements.includes(id.toString())) && !tmp[layer].deactivated)
 }
 
 function hasChallenge(layer, id) {
@@ -39,7 +39,7 @@ function setBuyableAmount(layer, id, amt) {
 }
 
 function addBuyables(layer, id, amt) {
-	player[layer].buyables[id] = player[layer].buyables[id].add(amt)
+	player[layer].buyables[id] = player[layer].buyables[id] + (amt)
 }
 
 function getClickableState(layer, id) {
