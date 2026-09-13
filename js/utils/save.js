@@ -244,7 +244,7 @@ function NaNcheck(data) {
 		else if (Array.isArray(data[item])) {
 			NaNcheck(data[item]);
 		}
-		else if (data[item] !== data[item] || checkDecimalNaN(data[item])) {
+		else if (data[item] !== data[item] || isNaN(data[item])) {
 			if (!NaNalert) {
 				clearInterval(interval);
 				NaNalert = true;
