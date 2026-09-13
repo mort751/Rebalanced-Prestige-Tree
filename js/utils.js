@@ -319,6 +319,11 @@ document.onkeyup = function (e) {
 	ctrlDown = e.ctrlKey
 }
 
+window.addEventListener("blur", function () {
+	shiftDown = false
+	ctrlDown = false
+})
+
 var onFocused = false
 function focused(x) {
 	onFocused = x
