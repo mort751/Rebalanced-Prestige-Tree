@@ -67,9 +67,9 @@ function getStartLayerData(layer) {
 	if (layerdata.unlocked === undefined)
 		layerdata.unlocked = true;
 	if (layerdata.total === undefined)
-		layerdata.total = decimalZero;
+		layerdata.total = 0;
 	if (layerdata.best === undefined)
-		layerdata.best = decimalZero;
+		layerdata.best = 0;
 	if (layerdata.resetTime === undefined)
 		layerdata.resetTime = 0;
 	if (layerdata.forceTooltip === undefined)
@@ -79,7 +79,7 @@ function getStartLayerData(layer) {
 	if (layerdata.noRespecConfirm === undefined) layerdata.noRespecConfirm = false
 	if (layerdata.clickables == undefined)
 		layerdata.clickables = getStartClickables(layer);
-	layerdata.spentOnBuyables = decimalZero;
+	layerdata.spentOnBuyables = 0;
 	layerdata.upgrades = [];
 	layerdata.milestones = [];
 	layerdata.lastMilestone = null;
@@ -95,7 +95,7 @@ function getStartBuyables(layer) {
 	if (layers[layer].buyables) {
 		for (id in layers[layer].buyables)
 			if (isPlainObject(layers[layer].buyables[id]))
-				data[id] = decimalZero;
+				data[id] = 0;
 	}
 	return data;
 }
@@ -137,9 +137,9 @@ function fixSave() {
 
 	for (layer in layers) {
 		if (player[layer].best !== undefined)
-			player[layer].best = new Decimal(player[layer].best);
+			player[layer].best = Number(player[layer].best);
 		if (player[layer].total !== undefined)
-			player[layer].total = new Decimal(player[layer].total);
+			player[layer].total = Number(player[layer].total);
 
 		if (layers[layer].tabFormat && !Array.isArray(layers[layer].tabFormat)) {
 
@@ -166,12 +166,12 @@ function fixData(defaultData, newData) {
 			else
 				fixData(defaultData[item], newData[item]);
 		}
-		else if (defaultData[item] instanceof Decimal) { // Convert to Decimal
-			if (newData[item] === undefined)
-				newData[item] = defaultData[item];
-
-			else
-				newData[item] = new Decimal(newData[item]);
+		else if (typeof defaultData[item] === "number") {
+		    if (newData[item] === undefined)
+		        newData[item] = defaultData[item];
+				
+		    else
+		        newData[item] = Number(newData[item]);
 		}
 		else if ((!!defaultData[item]) && (typeof defaultData[item] === "object")) {
 			if (newData[item] === undefined || (typeof defaultData[item] !== "object"))
@@ -244,15 +244,13 @@ function NaNcheck(data) {
 		else if (Array.isArray(data[item])) {
 			NaNcheck(data[item]);
 		}
-		else if (data[item] !== data[item] || isNaN(data[item])) {
+		else if (data[item] !== data[item] || Number.isNaN(data[item])) {
 			if (!NaNalert) {
 				clearInterval(interval);
 				NaNalert = true;
 				alert("Invalid value found in player, named '" + item + "'. Please let the creator of this mod know! You can refresh the page, and you will be un-NaNed.")
 				return
 			}
-		}
-		else if (data[item] instanceof Decimal) {
 		}
 		else if ((!!data[item]) && (data[item].constructor === Object)) {
 			NaNcheck(data[item]);
