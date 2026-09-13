@@ -64,23 +64,16 @@ function updateWidth() {
 function updateOomps(diff)
 {
 	tmp.other.oompsMag = 0
-	if (player.points.lte(new Decimal(1e100)) || diff == 0) return
+	if (player.points < 1e100 || diff == 0) return
 
-	var pp = new Decimal(player.points);
-	var lp = tmp.other.lastPoints || new Decimal(0);
-	if (pp.gt(lp)) {
-		if (pp.gte("10^^8")) {
-			pp = pp.slog(1e10)
-			lp = lp.slog(1e10)
-			tmp.other.oomps = pp.sub(lp).div(diff)
-			tmp.other.oompsMag = -1;
-		} else {
-			while (pp.div(lp).log(10).div(diff).gte("100") && tmp.other.oompsMag <= 5 && lp.gt(0)) {
-				pp = pp.log(10)
-				lp = lp.log(10)
-				tmp.other.oomps = pp.sub(lp).div(diff)
-				tmp.other.oompsMag++;
-			}
+	var pp = player.points;
+	var lp = tmp.other.lastPoints || 0;
+	if (pp > lp) {
+		while (Math.log10(pp / lp) / diff >= 100 && tmp.other.oompsMag <= 5 && lp > 0) {
+			pp = Math.log10(pp)
+			lp = Math.log10(lp)
+			tmp.other.oomps = (pp-lp)/diff
+			tmp.other.oompsMag++;
 		}
 	}
 
@@ -90,11 +83,9 @@ function constructBarStyle(layer, id) {
 	let bar = tmp[layer].bars[id]
 	let style = {}
 
-	let tempProgress
-	if (bar.progress instanceof Decimal)
-		tempProgress = (1 -Math.min(Math.max(bar.progress.toNumber(), 0), 1)) * 100
-	else
-		tempProgress = (1 -Math.min(Math.max(bar.progress, 0), 1)) * 100
+	let tempProgress;
+	
+	tempProgress = (1 -Math.min(Math.max(bar.progress, 0), 1)) * 100
 
 	style.dims = {'width': bar.width + "px", 'height': bar.height + "px"}
 	let dir = bar.direction
