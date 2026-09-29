@@ -31,5 +31,27 @@ addLayer("p", {
         description: "Start generating points.",
         cost: new Decimal(1),
     },
+    12: {
+        title: "The Prestige Effect",
+        description: "Prestige points boost points.",
+        cost: new Decimal(1),
+        effect() { 
+            let eff = player.p.points.add(1).sqrt()
+            return eff 
+        },
+        effectDisplay() { return format(this.effect()) + "x" },
+        unlocked() { return hasUpgrade(this.layer, 11) }
+    },
+    13: {
+        title: "Self Synergy",
+        description: "Points boost their own production.",
+        cost: new Decimal(5),
+        effect() { 
+            let eff = player.points.plus(1).log10().plus(1);
+            return eff 
+        },
+        effectDisplay() { return format(this.effect()) + "x" },
+        unlocked() { return hasUpgrade(this.layer, 12) }
+    },
     }
 })
