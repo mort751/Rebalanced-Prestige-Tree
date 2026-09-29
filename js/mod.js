@@ -1,8 +1,9 @@
 let modInfo = {
-	name: "The ??? Tree",
-	author: "nobody",
+	name: "The Prestige Tree: Rebalanced",
+	author: "bow",
 	pointsName: "points",
 	modFiles: ["layers.js", "tree.js"],
+	id: "prestige tree rebalance attempt like 500 or somthing",
 
 	discordName: "",
 	discordLink: "",
@@ -33,7 +34,7 @@ function getStartPoints(){
 
 // Determines if it should show points/sec
 function canGenPoints(){
-	return true
+	return hasUpgrade('p', 11)
 }
 
 // Calculate points/sec!
