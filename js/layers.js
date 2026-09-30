@@ -193,7 +193,7 @@ addLayer("a", {
         15: {
             name: "New Rows Await",
             done() { return player.b.unlocked || player.g.unlocked },
-            tooltip: "Reach 25 Prestige points.<br>Reward: Gain 20% more Prestige points.",
+            tooltip: "Perform a Row 2 reset.",
         },
     }
 })
