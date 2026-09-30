@@ -67,7 +67,10 @@ addLayer("b", {
 		points: new Decimal(0),
     }},
     color: "#415a9e",
-    requires: new Decimal(200), // Can be a function that takes requirement increases into account
+    requires() { 
+        let cost = 200
+        return cost
+    }, // Can be a function that takes requirement increases into account
     resource: "boosters", // Name of prestige currency
     baseResource: "points", // Name of resource prestige is based on
     baseAmount() { return player.points }, // Get the current amount of baseResource
@@ -103,7 +106,10 @@ addLayer("g", {
         power: new Decimal(0),
     }},
     color: "#409c6e",
-    requires: new Decimal(200), // Can be a function that takes requirement increases into account
+    requires() { 
+        let cost = 200
+        return cost 
+    }, // Can be a function that takes requirement increases into account
     resource: "generators", // Name of prestige currency
     baseResource: "points", // Name of resource prestige is based on
     baseAmount() { return player.points }, // Get the current amount of baseResource
